@@ -70,3 +70,8 @@ Route::delete('/Keranjang/{id}', [KeranjangController::class, 'destroy'])->name(
 
 Route::resource('video_lessons', VideoLessonController::class);
 
+
+use App\Http\Controllers\ImageController;
+
+Route::get('/image-upload', [ImageController::class, 'create'])->name('image.upload');
+Route::post('/image-upload', [ImageController::class, 'store'])->name('image.store');
