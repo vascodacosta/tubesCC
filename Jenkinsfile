@@ -17,6 +17,16 @@ pipeline {
         }
     }
 
+    stage('Build Docker Image') {
+            steps {
+                script {
+                    // Membuat Docker image dengan nama yang didefinisikan di variabel DOCKER_IMAGE
+                    docker.build("${DOCKER_IMAGE}", ".")
+                }
+            }
+        }
+
+    
     post {
         success {
             echo "Pipeline executed successfully!"
