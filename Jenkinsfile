@@ -15,9 +15,8 @@ pipeline {
                 git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
             }
         }
-    }
-    
-    stage('Build Docker Image') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
                     // Membuat Docker image dengan nama yang didefinisikan di variabel DOCKER_IMAGE
@@ -25,9 +24,8 @@ pipeline {
                 }
             }
         }
+    }
 
-
-    
     post {
         success {
             echo "Pipeline executed successfully!"
