@@ -25,21 +25,21 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                echo "Pushing Docker image to Docker Hub..."
-                script {
-                    sh '''
-                    # Login to Docker Hub (requires credentials configured in Jenkins)
-                    echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
+    //     stage('Push Docker Image') {
+    //         steps {
+    //             echo "Pushing Docker image to Docker Hub..."
+    //             script {
+    //                 sh '''
+    //                 # Login to Docker Hub (requires credentials configured in Jenkins)
+    //                 echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
 
-                    # Push the image
-                    docker push ${DOCKER_IMAGE}
-                    '''
-                }
-            }
-        }
-    }
+    //                 # Push the image
+    //                 docker push ${DOCKER_IMAGE}
+    //                 '''
+    //             }
+    //         }
+    //     }
+    // }
 
     post {
         success {
