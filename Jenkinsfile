@@ -17,40 +17,41 @@ pipeline {
             }
         }
 
-        // stage('Build and Start Docker Containers') {
-        //     steps {
-        //         echo "Building and starting Docker containers..."
-        //         script {
-        //             sh '''
-        //             # Stop and remove existing containers if any
-        //             docker-compose -p ${DOCKER_PROJECT_NAME} down || true
-
-        //             # Build and start containers
-        //             docker-compose -p ${DOCKER_PROJECT_NAME} up -d --build
-        //             '''
-        //         }
-        //     }
-        // }
-
-        // stage('Check Container Status') {
-        //     steps {
-        //         echo "Checking container status..."
-        //         script {
-        //             sh '''
-        //             docker-compose -p ${DOCKER_PROJECT_NAME} ps
-        //             '''
-        //         }
-        //     }
-        // }
-
         stage('Build Docker Image') {
             steps {
+                echo "Building Docker image..."
                 script {
-                    // Membuat Docker image dengan nama yang didefinisikan di variabel DOCKER_IMAGE
+                    // Build Docker image menggunakan context dari directory ini (.)
                     docker.build("${DOCKER_IMAGE}", ".")
                 }
-            }
-        }
+            }
+        }
+
+        stage('Start Docker Containers') {
+            steps {
+                echo "Starting Docker containers..."
+                script {
+                    sh '''
+                    # Stop and remove existing containers if any
+                    docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${DOCKER_PROJECT_NAME} down || true
+
+                    # Build and start containers
+                    docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${DOCKER_PROJECT_NAME} up -d --build
+                    '''
+                }
+            }
+        }
+
+        stage('Check Container Status') {
+            steps {
+                echo "Checking Docker container status..."
+                script {
+                    sh '''
+                    docker-compose -f ${DOCKER_COMPOSE_FILE} -p ${DOCKER_PROJECT_NAME} ps
+                    '''
+                }
+            }
+        }
     }
 
     post {
