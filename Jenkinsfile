@@ -1,4 +1,6 @@
-environment {
+pipeline {
+    agent any
+    environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_PROJECT_NAME = 'tubesCC'
         DOCKER_IMAGE = 'kostubes-app'
