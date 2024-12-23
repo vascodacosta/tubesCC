@@ -40,6 +40,17 @@ pipeline {
         //     }
         // }
 
+    stages {
+        stage('Checkout GitHub Repo') {
+            steps {
+                script {
+                    //Add github repo url
+                    git branch: 'node-test', url: 'https://username:accesstoken@github.com/Devops-App.git'
+                }
+            }
+        }
+    }
+
     post {
         always {
             //Add channel name
