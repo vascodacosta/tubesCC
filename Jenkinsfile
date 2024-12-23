@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     //Add github repo url
-                    git branch: 'node-test', url: 'https://username:accesstoken@github.com/Devops-App.git'
+                    git main: 'node-test', url: 'https://github.com/vascodacosta/tubesCC.git'
                 }
             }
         }
