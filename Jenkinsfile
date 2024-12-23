@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_PROJECT_NAME = 'tubesCC'
+        DOCKER_IMAGE = 'kostubes-app'
         GIT_REPO = 'https://github.com/vascodacosta/tubesCC.git'
         GIT_BRANCH = 'main'
     }
@@ -31,16 +32,25 @@ pipeline {
         //     }
         // }
 
-        stage('Check Container Status') {
+        // stage('Check Container Status') {
+        //     steps {
+        //         echo "Checking container status..."
+        //         script {
+        //             sh '''
+        //             docker-compose -p ${DOCKER_PROJECT_NAME} ps
+        //             '''
+        //         }
+        //     }
+        // }
+
+        stage('Build Docker Image') {
             steps {
-                echo "Checking container status..."
                 script {
-                    sh '''
-                    docker-compose -p ${DOCKER_PROJECT_NAME} ps
-                    '''
+                    // Membuat Docker image dengan nama yang didefinisikan di variabel DOCKER_IMAGE
+                    docker.build("${DOCKER_IMAGE}", ".")
                 }
-            }
-        }
+            }
+        }
     }
 
     post {
