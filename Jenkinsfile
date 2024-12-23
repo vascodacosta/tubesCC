@@ -16,20 +16,20 @@ pipeline {
             }
         }
 
-        stage('Build and Start Docker Containers') {
-            steps {
-                echo "Building and starting Docker containers..."
-                script {
-                    sh '''
-                    # Stop and remove existing containers if any
-                    docker-compose -p ${DOCKER_PROJECT_NAME} down || true
+        // stage('Build and Start Docker Containers') {
+        //     steps {
+        //         echo "Building and starting Docker containers..."
+        //         script {
+        //             sh '''
+        //             # Stop and remove existing containers if any
+        //             docker-compose -p ${DOCKER_PROJECT_NAME} down || true
 
-                    # Build and start containers
-                    docker-compose -p ${DOCKER_PROJECT_NAME} up -d --build
-                    '''
-                }
-            }
-        }
+        //             # Build and start containers
+        //             docker-compose -p ${DOCKER_PROJECT_NAME} up -d --build
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Check Container Status') {
             steps {
