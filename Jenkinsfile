@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_PROJECT_NAME = 'tubesCC'
-        DOCKER_IMAGE = 'kostubes-app'
+        DOCKER_IMAGE = 'kostubes'
         GIT_REPO = 'https://github.com/vascodacosta/tubesCC.git'
         GIT_BRANCH = 'main'
     }
@@ -16,7 +16,7 @@ pipeline {
             }
         }
     }
-
+    
     stage('Build Docker Image') {
             steps {
                 script {
@@ -25,6 +25,7 @@ pipeline {
                 }
             }
         }
+
 
     
     post {
