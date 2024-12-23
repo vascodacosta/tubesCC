@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
         DOCKER_PROJECT_NAME = 'tubesCC'
-        DOCKER_IMAGE = 'kostubes'
+        DOCKER_IMAGE = 'vazcodacosta/kostubes:v1.0'
         GIT_REPO = 'https://github.com/vascodacosta/tubesCC.git'
         GIT_BRANCH = 'main'
     }
@@ -18,9 +18,24 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                echo "Building Docker image..."
                 script {
-                    // Membuat Docker image dengan nama yang didefinisikan di variabel DOCKER_IMAGE
                     docker.build("${DOCKER_IMAGE}", ".")
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                echo "Pushing Docker image to Docker Hub..."
+                script {
+                    sh '''
+                    # Login to Docker Hub (requires credentials configured in Jenkins)
+                    echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
+
+                    # Push the image
+                    docker push ${DOCKER_IMAGE}
+                    '''
                 }
             }
         }
@@ -28,7 +43,7 @@ pipeline {
 
     post {
         success {
-            echo "Pipeline executed successfully!"
+            echo "Pipeline executed successfully! Image has been pushed to Docker Hub."
         }
         failure {
             echo "Pipeline failed. Please check the logs."
